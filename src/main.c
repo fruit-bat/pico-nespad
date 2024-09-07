@@ -12,10 +12,8 @@ static uint _sm;
 static uint32_t _nespad_state = 0;
 
 static void __not_in_flash_func(nespad_isr)() {
-  printf("isr\n");
   while (!pio_sm_is_rx_fifo_empty(_pio, _sm)) {
     _nespad_state = ~_pio->rxf[_sm];
-    printf("nespad_state = %32.32lb\n", _nespad_state);
   }  
 }
 
@@ -87,6 +85,7 @@ int main() {
   printf("Waiting...\n");
 
   while(true) {
-    __wfi();
+    sleep_ms(40);
+    printf("nespad_state = %32.32lb\n", _nespad_state);
   }
 }
