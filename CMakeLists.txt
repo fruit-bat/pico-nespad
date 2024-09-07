@@ -25,6 +25,10 @@ add_executable(pico_nespad_test
 	src/main.c
 )
 
+pico_generate_pio_header(pico_nespad_test 
+  ${CMAKE_CURRENT_LIST_DIR}/src/nespad.pio
+)
+
 target_compile_definitions(pico_nespad_test PRIVATE
 
 )

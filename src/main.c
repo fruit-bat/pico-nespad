@@ -4,7 +4,7 @@
 #include "hardware/gpio.h"
 #include "hardware/sync.h"
 #include "hardware/clocks.h"
-#include "nespad.h"
+#include "nespad.pio.h"
 #include "pico/stdio_uart.h"
 
 static PIO _pio;

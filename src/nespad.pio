@@ -1,0 +1,12 @@
+.program nespad
+.side_set 2
+                    ;            /--- ENABLE
+                    ;            |/-- CLK
+.wrap_target        ;            ||
+        nop               side 0b10 [7] 
+        nop               side 0b10 [7] 
+        set    x, 15      side 0b00 [5] 
+loop:   in     pins, 2    side 0b00 [1] 
+        nop               side 0b01 [7] 
+        jmp    x--, 3     side 0b00 [5] 
+.wrap
