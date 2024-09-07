@@ -8,5 +8,5 @@
         set    x, 15      side 0b00 [5] 
 loop:   in     pins, 2    side 0b00 [1] 
         nop               side 0b01 [7] 
-        jmp    x--, 3     side 0b00 [5] 
+        jmp    x--, loop  side 0b00 [5] 
 .wrap

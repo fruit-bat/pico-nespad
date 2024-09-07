@@ -22,7 +22,8 @@ add_compile_options(-Wall)
 
 
 add_executable(pico_nespad_test
-	src/main.c
+  src/nespad.c
+  src/main.c
 )
 
 pico_generate_pio_header(pico_nespad_test 
