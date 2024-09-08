@@ -6,6 +6,19 @@
 #include "hardware/clocks.h"
 #include "nespad.pio.h"
 
+//#define DEBUG_NESPAD
+#ifdef DEBUG_NESPAD
+#define DBG_NESPAD(...) printf(__VA_ARGS__)
+#else
+#define DBG_NESPAD(...)
+#endif
+#ifndef NESPAD_IRQ
+#define NESPAD_IRQ PIO0_IRQ_0
+#endif
+#ifndef NESPAD_PIO
+#define NESPAD_PIO pio0
+#endif
+
 static PIO _pio;
 static uint _sm;
 static uint32_t _nespad_state = 0;
@@ -26,14 +39,14 @@ uint32_t __not_in_flash_func(nespad_state)() {
 #define NESPAD_CLOCK_PERIOD_S 59e-6
 #endif 
 
-void nespad_program_init(PIO pio, uint sm, uint data_pin_base, uint clock_pin_base) {
+void nespad_program_init(PIO pio, uint pio_irq, uint sm, uint data_pin_base, uint clock_pin_base) {
   _pio = pio;
   _sm = sm;
-  printf("Adding program\n");
+  DBG_NESPAD("nespad: Adding program\n");
 
   uint offset = pio_add_program(pio, &nespad_program);
 
-  printf("Setting up GPIO\n");
+  DBG_NESPAD("nespad: Setting up GPIO\n");
 
   pio_gpio_init(pio, data_pin_base + 0);
   pio_gpio_init(pio, data_pin_base + 1);
@@ -46,14 +59,14 @@ void nespad_program_init(PIO pio, uint sm, uint data_pin_base, uint clock_pin_ba
 
   sm_config_set_in_pins(&c, data_pin_base);
   sm_config_set_sideset_pins(&c, clock_pin_base);
-  //sm_config_set_sideset_pin_base(&c, clock_pin_base);
+  //sm_config_set_sideset_pin_base(&c, clock_pin_base); // TODO use this one
 
   sm_config_set_in_shift(&c, true, true, 32);
 
   float div = (float)clock_get_hz(clk_sys) * (NESPAD_CLOCK_PERIOD_S) / 16;
   sm_config_set_clkdiv(&c, div);
 
-  printf("pio_sm_init\n");
+  DBG_NESPAD("nespad: pio_sm_init\n");
   pio_sm_init(pio, sm, offset, &c);
 
   const uint pin_mask = (3u << clock_pin_base) | (3u << data_pin_base);
@@ -64,10 +77,10 @@ void nespad_program_init(PIO pio, uint sm, uint data_pin_base, uint clock_pin_ba
   // Set the state machine running
   pio_sm_set_enabled(pio, sm, true);
 
-  printf("Adding ISR handler\n");
+  DBG_NESPAD("nespad: Adding ISR handler\n");
 
-  // irq_set_exclusive_handler(PIO0_IRQ_0, nespad_isr);
-  irq_add_shared_handler(PIO0_IRQ_0, nespad_isr, PICO_SHARED_IRQ_HANDLER_DEFAULT_ORDER_PRIORITY);
-  irq_set_enabled(PIO0_IRQ_0, true);
+  // irq_set_exclusive_handler(pio_irq, nespad_isr);
+  irq_add_shared_handler(pio_irq, nespad_isr, PICO_SHARED_IRQ_HANDLER_DEFAULT_ORDER_PRIORITY);
+  irq_set_enabled(pio_irq, true);
   pio_set_irq0_source_enabled(pio, pis_sm0_rx_fifo_not_empty + sm, true);    
 }

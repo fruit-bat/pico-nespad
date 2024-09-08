@@ -11,9 +11,6 @@ endif()
 
 # Look for board file in local board directory
 set(PICO_BOARD_HEADER_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/boards)
-# if (NOT PICO_BOARD)
-#     set(PICO_BOARD "vgaboard")
-# endif()
 
 # Pico SDC on Raspberry Pi 4
 cmake_policy(VERSION 3.12)

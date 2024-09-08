@@ -19,7 +19,7 @@ int main() {
 
   const uint data_pin_base = 12;
   const uint clock_pin_base = 14;
-  nespad_program_init(pio, sm, data_pin_base, clock_pin_base);
+  nespad_program_init(pio, PIO0_IRQ_0, sm, data_pin_base, clock_pin_base);
 
   printf("Waiting...\n");
 
