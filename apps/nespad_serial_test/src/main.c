@@ -7,19 +7,14 @@
 #include "nespad.h"
 #include "pico/stdio_uart.h"
 
-
+/**
+ * Read joypads every 40ms and send output to the serial port
+ */
 int main() {
   stdio_uart_init();
   printf("Startup\n");
 
-  PIO pio = pio0;
-  uint sm = pio_claim_unused_sm(pio, true);
-
-  printf("Claimed sm %d\n", sm);
-
-  const uint data_pin_base = 12;
-  const uint clock_pin_base = 14;
-  nespad_program_init(pio, PIO0_IRQ_0, sm, data_pin_base, clock_pin_base);
+  nespad_default_init();
 
   printf("Waiting...\n");
 
