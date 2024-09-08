@@ -27,6 +27,18 @@ make -j4
 cp ./nespad_serial_test/nespad_serial_test.uf2 /media/neo/RPI-RP2/
 ```
 
+Compile time symbols:
+```
+ * Symbol                   Default     Description
+ * -----------------------------------------------------------------------------------
+ * DEBUG_NESPAD                         Define this symbol for some debug to stdout
+ * NESPAD_CLOCK_PERIOD_S    59e-6       NES joypad data clock period in seconds
+ * NESPAD_PIO               pio0        Use PIO 0
+ * NESPAD_SM                            PIO statemachine; undefined to pick a free one
+ * NESPAD_IRQ               PIO0_IRQ_0  Use IRQ 0 for pio0
+ * NESPAD_CLK_PIN_BASE      12          GPIO start for CLK and ENABLE
+ * NESPAD_DATA_PIN_BASE     14          GPIO start for DATA1 and DATA2
+```
 ## NES joypad pins
 
 ![image](docs/nes_joypad_pins.png)
