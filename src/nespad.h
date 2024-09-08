@@ -4,6 +4,23 @@
 #include "hardware/gpio.h"
 
 /**
+ * Read dual NES joypads on a Pico PI
+ * 
+ * The driver uses a PIO program to constantly read from both joypads.
+ * Data from the PIO program is read using an ISR and stored to a static variable.
+ * 
+ * The original clock used by the joypads was 83.3kHz (12e-6s) but I think it is 
+ * more sensible to run a little slower and is defaulted to 17kHz (59e-6s), which
+ * gives 1 reading per millisecond.
+ * 
+ * General compile time symbols:
+ * 
+ * Symbol                   Default     Description
+ * -----------------------------------------------------------------------------------
+ * DEBUG_NESPAD                         Define this symbol for some debug to stdout
+ */
+
+/**
  * Initialize using defaults from compile time symbols:
  * 
  * Symbol                   Default     Description
