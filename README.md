@@ -16,6 +16,65 @@ Basic flow:
   uint32 joystate = nespad_state();
 ```
 
+## Helper functions
+There are some functions to help convert the return pad state to something useful.
+
+General helper functions:
+```
+/**
+ * Get the bit position of a button given the pad-state and button index
+ */
+uint32_t nespad_bitpos(
+    const uint32_t nespad_pad, // The joypad index (0 or 1)
+    const uint32_t nespad_bi   // One of NESPAD_BI_XXX
+);
+
+/**
+ * Get the bit-mask for a button given the pad-state and button index
+ */
+uint32_t nespad_bitmask(
+    const uint32_t nespad_pad, // The joypad index (0 or 1)
+    const uint32_t nespad_bi   // One of NESPAD_BI_XXX
+)
+
+/**
+ * Get a single button and return its state in a specific bit position
+ */
+uint32_t nespad_bit_shifted(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad, // The joypad index (0 or 1)
+    const uint32_t nespad_bi,  // One of NESPAD_BI_XXX
+    const uint32_t target_bp   // target bit position
+)
+```
+
+Conversions for specific joysticks:
+```
+/**
+ * Convert the joypad state to Kempston joystick state
+ */
+uint32_t nespad_to_kempston(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)   
+);
+
+/**
+ * Convert the joypad state to Kempston joystick state
+ */
+uint32_t nespad_to_sinclair_left(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)   
+);
+
+/**
+ * Convert the joypad state to Kempston joystick state
+ */
+uint32_t nespad_to_sinclair_right(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)   
+);
+```
+
 Build the sample app:
 ```
 cd pico-nespad

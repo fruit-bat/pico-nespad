@@ -96,6 +96,9 @@ uint32_t nespad_state();
 #define NESPAD_M2_LS NESPAD_M2(NESPAD_BI_LS)
 #define NESPAD_M2_RS NESPAD_M2(NESPAD_BI_RS)
 
+/**
+ * Get the bit position of a button given the pad-state and button index 
+ */
 inline uint32_t nespad_bitpos(
     const uint32_t nespad_pad, // The joypad index (0 or 1)
     const uint32_t nespad_bi   // One of NESPAD_BI_XXX
@@ -103,6 +106,9 @@ inline uint32_t nespad_bitpos(
     return (nespad_bi << 1) + nespad_pad;
 }
 
+/**
+ * Get the bit-mask for a button given the pad-state and button index
+ */
 inline uint32_t nespad_bitmask(
     const uint32_t nespad_pad, // The joypad index (0 or 1)
     const uint32_t nespad_bi   // One of NESPAD_BI_XXX
@@ -110,8 +116,9 @@ inline uint32_t nespad_bitmask(
     return 1 << nespad_bitpos(nespad_pad, nespad_bi);
 }
 
-
-// Looks complicated but hopefully optomises to a few instructions
+/**
+ * Get a single button and return its state in a specific bit position
+ */
 inline uint32_t nespad_bit_shifted(
     const uint32_t nespad_state,
     const uint32_t nespad_pad, // The joypad index (0 or 1)
@@ -134,16 +141,25 @@ inline uint32_t nespad_bit_shifted(
     }
 }
 
+/**
+ * Convert the joypad state to Kempston joystick state
+ */
 uint32_t nespad_to_kempston(
     const uint32_t nespad_state,
     const uint32_t nespad_pad // The joypad index (0 or 1)   
 );
 
+/**
+ * Convert the joypad state to Kempston joystick state
+ */
 uint32_t nespad_to_sinclair_left(
     const uint32_t nespad_state,
     const uint32_t nespad_pad // The joypad index (0 or 1)   
 );
 
+/**
+ * Convert the joypad state to Kempston joystick state
+ */
 uint32_t nespad_to_sinclair_right(
     const uint32_t nespad_state,
     const uint32_t nespad_pad // The joypad index (0 or 1)   
