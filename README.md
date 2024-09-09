@@ -48,7 +48,7 @@ uint32_t nespad_bit_shifted(
 );
 ```
 
-Conversions for specific joysticks:
+Conversions for specific joysticks on the ZX Spectrum:
 ```
 /**
  * Convert the joypad state to Kempston joystick state
@@ -59,7 +59,7 @@ uint32_t nespad_to_kempston(
 );
 
 /**
- * Convert the joypad state to Kempston joystick state
+ * Convert the joypad state to Left Sinclair joystick state
  */
 uint32_t nespad_to_sinclair_left(
     const uint32_t nespad_state,
@@ -67,12 +67,13 @@ uint32_t nespad_to_sinclair_left(
 );
 
 /**
- * Convert the joypad state to Kempston joystick state
+ * Convert the joypad state to Right Sinclair joystick state
  */
 uint32_t nespad_to_sinclair_right(
     const uint32_t nespad_state,
     const uint32_t nespad_pad // The joypad index (0 or 1)   
 );
+
 ```
 
 Build the sample app:
