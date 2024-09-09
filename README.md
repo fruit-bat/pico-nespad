@@ -17,7 +17,7 @@ Basic flow:
 ```
 
 ## Helper functions
-There are some functions to help convert the return pad state to something useful.
+There are some functions to help convert the returned pad state to something useful.
 
 General helper functions:
 ```
