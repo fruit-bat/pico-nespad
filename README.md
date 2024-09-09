@@ -35,7 +35,7 @@ uint32_t nespad_bitpos(
 uint32_t nespad_bitmask(
     const uint32_t nespad_pad, // The joypad index (0 or 1)
     const uint32_t nespad_bi   // One of NESPAD_BI_XXX
-)
+);
 
 /**
  * Get a single button and return its state in a specific bit position
@@ -45,7 +45,7 @@ uint32_t nespad_bit_shifted(
     const uint32_t nespad_pad, // The joypad index (0 or 1)
     const uint32_t nespad_bi,  // One of NESPAD_BI_XXX
     const uint32_t target_bp   // target bit position
-)
+);
 ```
 
 Conversions for specific joysticks:
