@@ -112,6 +112,9 @@ void nespad_program_init(PIO pio, uint pio_irq, uint sm, uint data_pin_base, uin
   pio_set_irq0_source_enabled(pio, pis_sm0_rx_fifo_not_empty + sm, true);    
 }
 
+/**
+ * Kemptson joystick bits
+ */
 #define KEMP_JOY_RIGHT 0
 #define KEMP_JOY_LEFT  1
 #define KEMP_JOY_DOWN  2
@@ -135,4 +138,47 @@ uint32_t nespad_to_kempston(
     nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_Y, KEMP_JOY_BT1) |
     nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_A, KEMP_JOY_BT2) |
     nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_X, KEMP_JOY_BT3);
+}
+
+/**
+ * Sinclair joystick bits
+ * Left joysick     1 (left), 2 (right), 3 (down), 4 (up) and 5 (fire) [01234]
+ * Right joystick   6 (left), 7 (right), 8 (down), 9 (up) and 0 (fire) [43210]
+ */
+#define SINCLAIR_JOY_L_LEFT  0
+#define SINCLAIR_JOY_L_RIGHT 1
+#define SINCLAIR_JOY_L_DOWN  2
+#define SINCLAIR_JOY_L_UP    3
+#define SINCLAIR_JOY_L_FIRE  4
+
+#define SINCLAIR_JOY_R_LEFT  4
+#define SINCLAIR_JOY_R_RIGHT 3
+#define SINCLAIR_JOY_R_DOWN  2
+#define SINCLAIR_JOY_R_UP    1
+#define SINCLAIR_JOY_R_FIRE  0
+
+uint32_t nespad_to_sinclair_left(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)   
+) {
+  return ~ (
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_RIGHT, SINCLAIR_JOY_L_RIGHT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_LEFT, SINCLAIR_JOY_L_LEFT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_DOWN, SINCLAIR_JOY_L_DOWN) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_UP, SINCLAIR_JOY_L_UP) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_B, SINCLAIR_JOY_L_FIRE)
+  ) & 0xff;
+}
+
+uint32_t nespad_to_sinclair_right(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)   
+) {
+  return ~ (
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_RIGHT, SINCLAIR_JOY_R_RIGHT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_LEFT, SINCLAIR_JOY_R_LEFT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_DOWN, SINCLAIR_JOY_R_DOWN) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_UP, SINCLAIR_JOY_R_UP) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_B, SINCLAIR_JOY_R_FIRE)
+  ) & 0xff;
 }

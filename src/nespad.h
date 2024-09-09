@@ -111,7 +111,7 @@ inline uint32_t nespad_bitmask(
 }
 
 
-// Looks complicated but hopefully optommises to a few instructions
+// Looks complicated but hopefully optomises to a few instructions
 inline uint32_t nespad_bit_shifted(
     const uint32_t nespad_state,
     const uint32_t nespad_pad, // The joypad index (0 or 1)
@@ -135,6 +135,16 @@ inline uint32_t nespad_bit_shifted(
 }
 
 uint32_t nespad_to_kempston(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)   
+);
+
+uint32_t nespad_to_sinclair_left(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)   
+);
+
+uint32_t nespad_to_sinclair_right(
     const uint32_t nespad_state,
     const uint32_t nespad_pad // The joypad index (0 or 1)   
 );
