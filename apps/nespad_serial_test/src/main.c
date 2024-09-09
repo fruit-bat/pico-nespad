@@ -20,6 +20,9 @@ int main() {
 
   while(true) {
     sleep_ms(40);
-    printf("nespad_state = %32.32lb\n", nespad_state());
+
+    const uint32_t pad_state = nespad_state();
+    const uint32_t kempston_state = nespad_to_kempston(pad_state, 0);
+    printf("NES %32.32lb, Kempston %8.8lb\n", pad_state, kempston_state);
   }
 }

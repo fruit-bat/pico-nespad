@@ -85,8 +85,8 @@ void nespad_program_init(PIO pio, uint pio_irq, uint sm, uint data_pin_base, uin
   pio_sm_config c = nespad_program_get_default_config(offset);
 
   sm_config_set_in_pins(&c, data_pin_base);
-  sm_config_set_sideset_pins(&c, clock_pin_base);
-  //sm_config_set_sideset_pin_base(&c, clock_pin_base); // TODO use this one
+  //sm_config_set_sideset_pins(&c, clock_pin_base); // Old SDK
+  sm_config_set_sideset_pin_base(&c, clock_pin_base);
 
   sm_config_set_in_shift(&c, true, true, 32);
 
@@ -110,4 +110,29 @@ void nespad_program_init(PIO pio, uint pio_irq, uint sm, uint data_pin_base, uin
   irq_add_shared_handler(pio_irq, nespad_isr, PICO_SHARED_IRQ_HANDLER_DEFAULT_ORDER_PRIORITY);
   irq_set_enabled(pio_irq, true);
   pio_set_irq0_source_enabled(pio, pis_sm0_rx_fifo_not_empty + sm, true);    
+}
+
+#define KEMP_JOY_RIGHT 0
+#define KEMP_JOY_LEFT  1
+#define KEMP_JOY_DOWN  2
+#define KEMP_JOY_UP    3
+#define KEMP_JOY_BT1   4
+#define KEMP_JOY_BT2   5
+#define KEMP_JOY_BT3   6
+#define KEMP_JOY_BT0   7
+#define KEMP_JOY_FIRE  4
+
+uint32_t nespad_to_kempston(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)
+) {
+  return
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_RIGHT, KEMP_JOY_RIGHT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_LEFT, KEMP_JOY_LEFT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_DOWN, KEMP_JOY_DOWN) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_UP, KEMP_JOY_UP) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_B, KEMP_JOY_BT0) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_Y, KEMP_JOY_BT1) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_A, KEMP_JOY_BT2) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_X, KEMP_JOY_BT3);
 }

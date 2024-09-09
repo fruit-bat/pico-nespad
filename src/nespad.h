@@ -51,47 +51,90 @@ uint32_t nespad_state();
 #define NESPAD_M1(X) (1 << ((X) << 1)) 
 #define NESPAD_M2(X) (NESPAD_M1(X) << 1)
 
-#define NESPAD_BP_B 0
-#define NESPAD_BP_Y 1
-#define NESPAD_BP_SELECT 2
-#define NESPAD_BP_START 3
-#define NESPAD_BP_UP 4
-#define NESPAD_BP_DOWN 5
-#define NESPAD_BP_LEFT 6
-#define NESPAD_BP_RIGHT 7
-#define NESPAD_BP_A 8
-#define NESPAD_BP_X 9
-#define NESPAD_BP_LS 10
-#define NESPAD_BP_RS 11
+#define NESPAD_BI_B 0
+#define NESPAD_BI_Y 1
+#define NESPAD_BI_SELECT 2
+#define NESPAD_BI_START 3
+#define NESPAD_BI_UP 4
+#define NESPAD_BI_DOWN 5
+#define NESPAD_BI_LEFT 6
+#define NESPAD_BI_RIGHT 7
+#define NESPAD_BI_A 8
+#define NESPAD_BI_X 9
+#define NESPAD_BI_LS 10
+#define NESPAD_BI_RS 11
 
 /**
  * Masks for joypad 1
  */
-#define NESPAD_M1_B NESPAD_M1(NESPAD_BP_B)
-#define NESPAD_M1_Y NESPAD_M1(NESPAD_BP_Y)
-#define NESPAD_M1_SELECT NESPAD_M1(NESPAD_BP_SELECT)
-#define NESPAD_M1_START NESPAD_M1(NESPAD_BP_START)
-#define NESPAD_M1_UP NESPAD_M1(NESPAD_BP_UP)
-#define NESPAD_M1_DOWN NESPAD_M1(NESPAD_BP_DOWN)
-#define NESPAD_M1_LEFT NESPAD_M1(NESPAD_BP_LEFT)
-#define NESPAD_M1_RIGHT NESPAD_M1(NESPAD_BP_RIGHT)
-#define NESPAD_M1_A NESPAD_M1(NESPAD_BP_A)
-#define NESPAD_M1_X NESPAD_M1(NESPAD_BP_X)
-#define NESPAD_M1_LS NESPAD_M1(NESPAD_BP_LS)
-#define NESPAD_M1_RS NESPAD_M1(NESPAD_BP_RS)
+#define NESPAD_M1_B NESPAD_M1(NESPAD_BI_B)
+#define NESPAD_M1_Y NESPAD_M1(NESPAD_BI_Y)
+#define NESPAD_M1_SELECT NESPAD_M1(NESPAD_BI_SELECT)
+#define NESPAD_M1_START NESPAD_M1(NESPAD_BI_START)
+#define NESPAD_M1_UP NESPAD_M1(NESPAD_BI_UP)
+#define NESPAD_M1_DOWN NESPAD_M1(NESPAD_BI_DOWN)
+#define NESPAD_M1_LEFT NESPAD_M1(NESPAD_BI_LEFT)
+#define NESPAD_M1_RIGHT NESPAD_M1(NESPAD_BI_RIGHT)
+#define NESPAD_M1_A NESPAD_M1(NESPAD_BI_A)
+#define NESPAD_M1_X NESPAD_M1(NESPAD_BI_X)
+#define NESPAD_M1_LS NESPAD_M1(NESPAD_BI_LS)
+#define NESPAD_M1_RS NESPAD_M1(NESPAD_BI_RS)
 
 /**
  * Masks for joypad 2
  */
-#define NESPAD_M2_B NESPAD_M2(NESPAD_BP_B)
-#define NESPAD_M2_Y NESPAD_M2(NESPAD_BP_Y)
-#define NESPAD_M2_SELECT NESPAD_M2(NESPAD_BP_SELECT)
-#define NESPAD_M2_START NESPAD_M2(NESPAD_BP_START)
-#define NESPAD_M2_UP NESPAD_M2(NESPAD_BP_UP)
-#define NESPAD_M2_DOWN NESPAD_M2(NESPAD_BP_DOWN)
-#define NESPAD_M2_LEFT NESPAD_M2(NESPAD_BP_LEFT)
-#define NESPAD_M2_RIGHT NESPAD_M2(NESPAD_BP_RIGHT)
-#define NESPAD_M2_A NESPAD_M2(NESPAD_BP_A)
-#define NESPAD_M2_X NESPAD_M2(NESPAD_BP_X)
-#define NESPAD_M2_LS NESPAD_M2(NESPAD_BP_LS)
-#define NESPAD_M2_RS NESPAD_M2(NESPAD_BP_RS)
+#define NESPAD_M2_B NESPAD_M2(NESPAD_BI_B)
+#define NESPAD_M2_Y NESPAD_M2(NESPAD_BI_Y)
+#define NESPAD_M2_SELECT NESPAD_M2(NESPAD_BI_SELECT)
+#define NESPAD_M2_START NESPAD_M2(NESPAD_BI_START)
+#define NESPAD_M2_UP NESPAD_M2(NESPAD_BI_UP)
+#define NESPAD_M2_DOWN NESPAD_M2(NESPAD_BI_DOWN)
+#define NESPAD_M2_LEFT NESPAD_M2(NESPAD_BI_LEFT)
+#define NESPAD_M2_RIGHT NESPAD_M2(NESPAD_BI_RIGHT)
+#define NESPAD_M2_A NESPAD_M2(NESPAD_BI_A)
+#define NESPAD_M2_X NESPAD_M2(NESPAD_BI_X)
+#define NESPAD_M2_LS NESPAD_M2(NESPAD_BI_LS)
+#define NESPAD_M2_RS NESPAD_M2(NESPAD_BI_RS)
+
+inline uint32_t nespad_bitpos(
+    const uint32_t nespad_pad, // The joypad index (0 or 1)
+    const uint32_t nespad_bi   // One of NESPAD_BI_XXX
+) {
+    return (nespad_bi << 1) + nespad_pad;
+}
+
+inline uint32_t nespad_bitmask(
+    const uint32_t nespad_pad, // The joypad index (0 or 1)
+    const uint32_t nespad_bi   // One of NESPAD_BI_XXX
+) {
+    return 1 << nespad_bitpos(nespad_pad, nespad_bi);
+}
+
+
+// Looks complicated but hopefully optommises to a few instructions
+inline uint32_t nespad_bit_shifted(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad, // The joypad index (0 or 1)
+    const uint32_t nespad_bi,  // One of NESPAD_BI_XXX
+    const uint32_t target_bp
+) {
+    const uint32_t pad_bitpos = nespad_bitpos(nespad_pad, nespad_bi);
+    const int32_t shift = (int32_t)target_bp - (int32_t)pad_bitpos;
+    const uint32_t pad_bitmask = 1 << pad_bitpos;
+    const uint32_t bs = nespad_state & pad_bitmask;
+
+    if (shift > 0) {
+        return bs << shift;
+    }
+    else if (shift < 0) {
+        return bs >> -shift;
+    }
+    else {
+        return bs;
+    }
+}
+
+uint32_t nespad_to_kempston(
+    const uint32_t nespad_state,
+    const uint32_t nespad_pad // The joypad index (0 or 1)   
+);
