@@ -127,6 +127,16 @@ Compile time symbols:
 
 ![image](docs/nes_joypad_clocks.png)
 
+## Build for RP2350
+```
+mkdir build-2350
+cd build-2350
+cmake -DPICO_SDK_PATH=~/pico/pico-sdk -DPICO_MCU=rp2350 ..
+make -j4
+```
+
+
+
 ## References
 https://gamefaqs.gamespot.com/snes/916396-super-nintendo/faqs/5395<br/>
 https://tresi.github.io/nes/<br/>

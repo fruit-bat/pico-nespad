@@ -3,6 +3,9 @@
 #include "hardware/pio.h"
 #include "hardware/gpio.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /**
  * Read dual NES joypads on a Pico PI
  * 
@@ -164,3 +167,7 @@ uint32_t nespad_to_sinclair_right(
     const uint32_t nespad_state,
     const uint32_t nespad_pad // The joypad index (0 or 1)   
 );
+
+#ifdef __cplusplus
+}
+#endif
