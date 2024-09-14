@@ -33,7 +33,7 @@
 
 static PIO _pio;
 static uint _sm;
-static uint32_t _nespad_state = 0;
+static volatile uint32_t _nespad_state = 0;
 
 static void __not_in_flash_func(nespad_isr)() {
   while (!pio_sm_is_rx_fifo_empty(_pio, _sm)) {
@@ -119,11 +119,10 @@ void nespad_program_init(PIO pio, uint pio_irq, uint sm, uint data_pin_base, uin
 #define KEMP_JOY_LEFT  1
 #define KEMP_JOY_DOWN  2
 #define KEMP_JOY_UP    3
-#define KEMP_JOY_BT1   4
-#define KEMP_JOY_BT2   5
-#define KEMP_JOY_BT3   6
-#define KEMP_JOY_BT0   7
-#define KEMP_JOY_FIRE  4
+#define KEMP_JOY_BT0   4
+#define KEMP_JOY_BT1   5
+#define KEMP_JOY_BT2   6
+#define KEMP_JOY_BT3   7
 
 uint32_t nespad_to_kempston(
     const uint32_t nespad_state,
@@ -136,8 +135,8 @@ uint32_t nespad_to_kempston(
     nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_UP, KEMP_JOY_UP) |
     nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_B, KEMP_JOY_BT0) |
     nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_Y, KEMP_JOY_BT1) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_A, KEMP_JOY_BT2) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_X, KEMP_JOY_BT3);
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_SELECT, KEMP_JOY_BT2) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_START, KEMP_JOY_BT3);
 }
 
 /**
