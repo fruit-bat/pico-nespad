@@ -4,7 +4,12 @@ add_executable(nespad_serial_test
 )
 
 target_compile_definitions(nespad_serial_test PRIVATE
-
+  NESPAD_DATA_PIN_BASE=20
+  NESPAD_CLK_PIN_BASE=26
+  NESPAD_PIO=pio1
+  NESPAD_IRQ=PIO1_IRQ_0
+  NESPAD_SM=3
+  DEBUG_NESPAD
 )
 
 target_link_libraries(nespad_serial_test

@@ -5,6 +5,11 @@ Pico PI NES joypad reader
 
 Reads from dual NES joypads on a Pico PI.
 
+The library should work for both NES (8-bit) and SNES (12-bit) controllers,
+with button A and B reporting in the LSB respectively.
+
+![image](docs/nespad_8_12.png)
+
 ## Example use
 Basic flow:
 ```
@@ -13,6 +18,9 @@ Basic flow:
   ...
 
   nespad_default_init();
+
+  ...
+
   uint32 joystate = nespad_state();
 ```
 

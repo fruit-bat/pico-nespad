@@ -129,14 +129,14 @@ uint32_t nespad_to_kempston(
     const uint32_t nespad_pad // The joypad index (0 or 1)
 ) {
   return
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_RIGHT, KEMP_JOY_RIGHT) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_LEFT, KEMP_JOY_LEFT) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_DOWN, KEMP_JOY_DOWN) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_UP, KEMP_JOY_UP) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_B, KEMP_JOY_BT0) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_Y, KEMP_JOY_BT1) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_SELECT, KEMP_JOY_BT2) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_START, KEMP_JOY_BT3);
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_RIGHT, KEMP_JOY_RIGHT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_LEFT, KEMP_JOY_LEFT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_DOWN, KEMP_JOY_DOWN) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_UP, KEMP_JOY_UP) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_B, KEMP_JOY_BT0) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_Y, KEMP_JOY_BT1) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_SELECT, KEMP_JOY_BT2) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_START, KEMP_JOY_BT3);
 }
 
 /**
@@ -161,11 +161,11 @@ uint32_t nespad_to_sinclair_left(
     const uint32_t nespad_pad // The joypad index (0 or 1)   
 ) {
   return ~ (
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_RIGHT, SINCLAIR_JOY_L_RIGHT) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_LEFT, SINCLAIR_JOY_L_LEFT) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_DOWN, SINCLAIR_JOY_L_DOWN) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_UP, SINCLAIR_JOY_L_UP) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_B, SINCLAIR_JOY_L_FIRE)
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_RIGHT, SINCLAIR_JOY_L_RIGHT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_LEFT, SINCLAIR_JOY_L_LEFT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_DOWN, SINCLAIR_JOY_L_DOWN) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_UP, SINCLAIR_JOY_L_UP) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_B, SINCLAIR_JOY_L_FIRE)
   ) & 0xff;
 }
 
@@ -174,10 +174,10 @@ uint32_t nespad_to_sinclair_right(
     const uint32_t nespad_pad // The joypad index (0 or 1)   
 ) {
   return ~ (
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_RIGHT, SINCLAIR_JOY_R_RIGHT) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_LEFT, SINCLAIR_JOY_R_LEFT) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_DOWN, SINCLAIR_JOY_R_DOWN) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_UP, SINCLAIR_JOY_R_UP) |
-    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD_BI_B, SINCLAIR_JOY_R_FIRE)
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_RIGHT, SINCLAIR_JOY_R_RIGHT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_LEFT, SINCLAIR_JOY_R_LEFT) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_DOWN, SINCLAIR_JOY_R_DOWN) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_UP, SINCLAIR_JOY_R_UP) |
+    nespad_bit_shifted(nespad_state, nespad_pad, NESPAD12_BI_B, SINCLAIR_JOY_R_FIRE)
   ) & 0xff;
 }
